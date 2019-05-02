@@ -23,7 +23,7 @@ rescale(1:10)
 
 Try the rescale2() function that catches string inputs
 ```{r}
-rescale2(c(1:10), "string"))
+#rescale2(c(1:10), "string"))
 ```
 
 # Find missing NA values in teo vectors
@@ -97,7 +97,7 @@ length(y2)
 
 Now let's try both_na2() function on our different length input vectors
 ```{r}
-both_na2(x, y2)
+#both_na2(x, y2)
 ```
 
 ```{r}
