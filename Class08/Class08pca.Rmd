@@ -1,0 +1,104 @@
+---
+title: "PCA"
+author: "Sharon Chang"
+date: "4/25/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+x <- read.csv("UK_foods.csv")
+
+## Complete the following code to find out how many rows and columns are in x?
+dim(x)
+```
+
+```{r}
+## Preview the first 6 rows
+head(x)
+```
+
+```{r}
+# Note how the minus indexing works
+rownames(x) <- x[,1]
+x <- x[,-1]
+head(x)
+```
+
+```{r}
+# Check the dimensions again
+dim(x)
+```
+
+```{r}
+x <- read.csv("UK_foods.csv", row.names=1)
+head(x)
+```
+
+> Q2. Which approach to solving the ‘row-names problem’ mentioned above do you prefer and why? Is one approach more robust than another under certain circumstances?
+
+> The second method (row.names = 1). You cannot run minus indexing multiple times (it will delete a column every time)
+
+```{r}
+barplot(as.matrix(x), beside=T, col=rainbow(nrow(x)))
+```
+
+> Q3: Changing what optional argument in the above barplot() function results in the following plot?
+
+> Setting beside = FALSE
+
+> Q5: Generating all pairwise plots may help somewhat. Can you make sense of the following code and resulting figure? What does it mean if a given point lies on the diagonal for a given plot?
+
+```{r}
+pairs(x, col=rainbow(10), pch=16)
+```
+
+> Q6. What is the main differences between N. Ireland and the other countries of the UK in terms of this data-set?
+
+```{r}
+# Use the prcomp() PCA function 
+pca <- prcomp( t(x) )
+summary(pca)
+```
+
+```{r}
+# Plot PC1 vs PC2
+plot(pca$x[,1], pca$x[,2], xlab="PC1", ylab="PC2", xlim=c(-270,500), col=rainbow(4))
+text(pca$x[,1], pca$x[,2], colnames(x), col=rainbow(4))
+```
+
+```{r}
+# Below we can use the square of pca$sdev , which stands for “standard deviation”, to calculate how much variation in the original data each PC accounts for.
+
+v <- round( pca$sdev^2/sum(pca$sdev^2) * 100 )
+v
+```
+
+```{r}
+## or the second row here...
+z <- summary(pca)
+z$importance
+```
+
+```{r}
+# This information can be summarized in a plot of the variances (eigenvalues) with respect to the principal component number (eigenvector number), which is given below.
+
+barplot(v, xlab="Principal Component", ylab="Percent Variation")
+```
+
+```{r}
+## Lets focus on PC1 as it accounts for > 90% of variance 
+par(mar=c(10, 3, 0.35, 0))
+barplot( pca$rotation[,1], las=2 )
+```
+
+```{r}
+# Another way to see this information together with the main PCA plot is in a so-called biplot:
+
+## The inbuilt biplot() can be useful for small datasets 
+biplot(pca)
+```
+
