@@ -1,0 +1,49 @@
+---
+title: "Class 12"
+author: "Sharon Chang"
+date: "5/9/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(bio3d)
+file.name <- get.pdb("1hsg")
+```
+
+```{r}
+hiv <- read.pdb(file.name)
+hiv
+```
+
+```{r}
+prot <- trim.pdb(hiv, "protein")
+lig <- trim.pdb(hiv, "ligand")
+
+write.pdb(prot, file = "1hsg_protein.pdb")
+write.pdb(lig, file = "1hsg_ligand.pdb")
+```
+
+```{r}
+library(bio3d)
+res <- read.pdb("all.pdbqt", multi = TRUE)
+write.pdb(res, "results.pdb")
+```
+
+```{r}
+ori <- read.pdb("ligand.pdbqt")
+rmsd(ori, res)
+```
+
+```{r}
+library(bio3d)
+pdb <- read.pdb("1HEL")
+modes <- nma(pdb)
+#plot(modes, sse=pdb)
+m7 <- mktrj(modes, mode=7, file = "nma_7.pdb")
+m7
+```
+

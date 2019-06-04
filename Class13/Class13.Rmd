@@ -1,0 +1,52 @@
+---
+title: "Class 13"
+author: "Sharon Chang"
+date: "5/14/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+mxl <- read.csv("373531-SampleGenotypes-Homo_sapiens_Variation_Sample_rs8067378.csv")
+head(mxl)
+```
+
+```{r}
+table(mxl$Genotype..forward.strand.) / nrow(mxl) *100
+```
+
+```{r}
+library(seqinr)
+library(gtools)
+phred <- asc( s2c("DDDDCDEDCDDDDBBDDDCC@") ) - 33
+phred
+```
+
+```{r}
+expr <- read.table("rs8067378_ENSG00000172057.6.txt", row.names=1)
+
+head(expr)
+```
+
+
+```{r}
+summary(expr)
+```
+
+```{r}
+inds <- expr$geno == "G/G"
+summary(expr[inds,"exp"])
+```
+
+```{r}
+inds <- expr$geno == "A/A"
+summary(expr[inds,"exp"])
+```
+
+```{r}
+boxplot(exp ~ geno , data=expr)
+```
+
