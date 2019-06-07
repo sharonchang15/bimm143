@@ -422,8 +422,8 @@ rmsd(ori, res)</code></pre>
 pdb &lt;- read.pdb(&quot;1HEL&quot;)</code></pre>
 <pre><code>##   Note: Accessing on-line PDB file</code></pre>
 <pre class="r"><code>modes &lt;- nma(pdb)</code></pre>
-<pre><code>##  Building Hessian...     Done in 0.03 seconds.
-##  Diagonalizing Hessian...    Done in 0.35 seconds.</code></pre>
+<pre><code>##  Building Hessian...     Done in 0.02 seconds.
+##  Diagonalizing Hessian...    Done in 0.18 seconds.</code></pre>
 <pre class="r"><code>#plot(modes, sse=pdb)
 m7 &lt;- mktrj(modes, mode=7, file = &quot;nma_7.pdb&quot;)
 m7</code></pre>
